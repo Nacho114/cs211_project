@@ -1,1 +1,1 @@
-Into to Visual Computing project
+Intro to Visual Computing project
