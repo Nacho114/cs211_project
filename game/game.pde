@@ -10,6 +10,7 @@ float rz = 0.;
 
 final int boxLength = 200;
 final int boxHeight = 10;
+final int radius = 10;
 
 float amplifier = 1.0;
 
@@ -19,7 +20,7 @@ void settings() {
 
 void setup() {
   noStroke();
-  mover = new Mover(boxLength, boxHeight, boxHeight / 2);
+  mover = new Mover(boxLength, boxHeight, radius);
 }
 
 void draw() {
