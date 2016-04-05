@@ -1,5 +1,6 @@
 Mover mover;
 Cylinders cylinders;
+DataV datav;
 
 float depth = 300;
 
@@ -23,10 +24,13 @@ void settings() {
   size(800, 600, P3D);
 }
 
+
+
 void setup() {
   noStroke();
   mover = new Mover(boxLength, boxHeight, radius);
   cylinders = new Cylinders(boxHeight, width, height, cylinderRadius, cylinderHeight);
+  datav = new DataV();
 }
 
 void draw() {
@@ -34,6 +38,7 @@ void draw() {
     drawPlane();
   else 
     shiftMode();
+
 }
 
 
@@ -44,6 +49,7 @@ void shiftMode() {
   background(color(255));
   text(mouseX, 175, 140);
   text(mouseY, 300, 140);
+
   pushMatrix();
   pushStyle();
     translate(width/2, height/2, 0);
@@ -63,6 +69,10 @@ void drawPlane() {
   //directionalLight(50, 100, 125, -1, 1, -1);
   ambientLight(102, 102, 102);
   background(180);
+
+  datav.drawMySurface();
+  image(datav.surface, 100, 450);
+
   
   pushMatrix();
   translate(width/2, height/2, 0);
