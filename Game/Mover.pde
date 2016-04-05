@@ -1,6 +1,6 @@
 class Mover {
-  final static float gravityMagnitude = 0.1; 
-  final static float mu = 0.02;
+  final static float gravityMagnitude = 0.2; 
+  final static float mu = 0.03;
   final static float normalForce = 1;
   final static float frictionMagnitude = mu * normalForce;
 

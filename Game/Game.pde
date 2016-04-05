@@ -2,7 +2,7 @@ Mover mover;
 Cylinders cylinders;
 DataV datav;
 
-float depth = 300;
+float depth;
 
 int lastX;
 int lastY;
@@ -12,7 +12,7 @@ boolean shift_mode = false;
 float rx = 0.;
 float rz = 0.;
 
-final int boxLength = 200;
+final int boxLength = 300;
 final int boxHeight = 10;
 final int radius = 10;
 final int cylinderRadius = 15;
@@ -31,6 +31,7 @@ void setup() {
   mover = new Mover(boxLength, boxHeight, radius);
   cylinders = new Cylinders(boxHeight, width, height, cylinderRadius, cylinderHeight);
   datav = new DataV();
+  depth = sqrt(pow((height/2.0) / tan(PI*30.0 / 180.0), 2)-(height*height/16));
 }
 
 void draw() {
@@ -63,17 +64,16 @@ void shiftMode() {
 }
 
 void drawPlane() {
-  
-  camera(width/2, height/4, depth, width/2, height/2, 0, 0, 1, 0);
+  camera(width/2.0, height/4.0, depth, width/2.0, height/2.0, 0, 0, 1, 0);
   directionalLight(200, 100, 50, 0, 1, 0);
-  //directionalLight(50, 100, 125, -1, 1, -1);
   ambientLight(102, 102, 102);
   background(230);
   
   // data visualization
   pushMatrix();
-    translate(0, 3*height/4, 0);
+    translate(width/2, height/2, 0);
     rotateX(atan(height/4/depth)); // adjust to face camera
+    translate(-width/2, height/4, 0);
     datav.drawAll();
   popMatrix();
 
@@ -99,11 +99,11 @@ void drawPlane() {
   popMatrix();
   
   // display text
-  pushMatrix();
+  /*pushMatrix();
     translate(width/2, height/2, 0);
     rotateX(atan(height/4/depth)); // adjust to face camera
     text(rx*180/PI + "\n" + +rz*180/PI + "\n" + amplifier, -width/4, -height/4);
-  popMatrix();
+  popMatrix();*/
 }
 
 
