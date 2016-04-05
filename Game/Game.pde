@@ -69,30 +69,31 @@ void drawPlane() {
   background(180);
 
   pushMatrix();
-  translate(width/2, height/2, 0);
-  rotateX(rx);
-  rotateZ(rz);
-  box(boxLength, boxHeight, boxLength);
-  
-  // update ball
-  mover.update(rx, rz);
-  
-  // check collision with cylinders and edges
-  if(!cylinders.locations.isEmpty()) {
-     mover.checkCylinderCollision(cylinders.locations, cylinderRadius);
-  }
-  mover.checkEdges();
-  
-  // display
-  mover.display();
-  cylinders.paintAll();
-  
+    translate(width/2, height/2, 0);
+    rotateX(rx);
+    rotateZ(rz);
+    box(boxLength, boxHeight, boxLength);
+    
+    // update ball
+    mover.update(rx, rz);
+    
+    // check collision with cylinders and edges
+    if(!cylinders.locations.isEmpty()) {
+       mover.checkCylinderCollision(cylinders.locations, cylinderRadius);
+    }
+    mover.checkEdges();
+    
+    // display
+    mover.display();
+    cylinders.paintAll();
   popMatrix();
   
-  text(rx*180/PI, 175, 140);
-  text(rz*180/PI, 230, 140);
-  text(amplifier, 285, 140);
-
+  // display text
+  pushMatrix();
+    translate(width/2, height/2, 0);
+    rotateX(atan(height/4/depth)); // adjust to face camera
+    text(rx*180/PI + "\n" + +rz*180/PI + "\n" + amplifier, -width/4, -height/4);
+  popMatrix();
 }
 
 
@@ -110,7 +111,8 @@ void mousePressed() {
     lastX = mouseX;
     lastY = mouseY;
   } else {
-    cylinders.add(mouseX, mouseY);
+    if(mouseX > width/2 - boxLength/2)
+      cylinders.add(mouseX, mouseY);
   }
 }
 
