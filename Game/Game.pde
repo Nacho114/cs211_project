@@ -1,6 +1,5 @@
 Mover mover;
 Cylinders cylinders;
-DataV datav;
 
 float depth = 300;
 
@@ -30,7 +29,6 @@ void setup() {
   noStroke();
   mover = new Mover(boxLength, boxHeight, radius);
   cylinders = new Cylinders(boxHeight, width, height, cylinderRadius, cylinderHeight);
-  datav = new DataV();
 }
 
 void draw() {
@@ -70,10 +68,6 @@ void drawPlane() {
   ambientLight(102, 102, 102);
   background(180);
 
-  datav.drawMySurface();
-  image(datav.surface, 100, 450);
-
-  
   pushMatrix();
   translate(width/2, height/2, 0);
   rotateX(rx);
