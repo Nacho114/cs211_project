@@ -1,5 +1,6 @@
 Mover mover;
 Cylinders cylinders;
+DataV datav;
 
 float depth = 300;
 
@@ -20,7 +21,7 @@ final int cylinderHeight = 15;
 float amplifier = 1.0;
 
 void settings() {
-  size(800, 600, P3D);
+  size(900, 600, P3D);
 }
 
 
@@ -29,6 +30,7 @@ void setup() {
   noStroke();
   mover = new Mover(boxLength, boxHeight, radius);
   cylinders = new Cylinders(boxHeight, width, height, cylinderRadius, cylinderHeight);
+  datav = new DataV();
 }
 
 void draw() {
@@ -61,13 +63,21 @@ void shiftMode() {
 }
 
 void drawPlane() {
-
+  
   camera(width/2, height/4, depth, width/2, height/2, 0, 0, 1, 0);
   directionalLight(200, 100, 50, 0, 1, 0);
   //directionalLight(50, 100, 125, -1, 1, -1);
   ambientLight(102, 102, 102);
-  background(180);
+  background(230);
+  
+  // data visualization
+  pushMatrix();
+    translate(0, 3*height/4, 0);
+    rotateX(atan(height/4/depth)); // adjust to face camera
+    datav.drawAll();
+  popMatrix();
 
+  // plate
   pushMatrix();
     translate(width/2, height/2, 0);
     rotateX(rx);
@@ -111,7 +121,7 @@ void mousePressed() {
     lastX = mouseX;
     lastY = mouseY;
   } else {
-    if(mouseX > width/2 - boxLength/2)
+    if(mouseX > width/2 - boxLength/2 && mouseX < width/2 + boxLength/2 && mouseY > height/2 - boxLength/2 && mouseY < height/2 + boxLength/2)
       cylinders.add(mouseX, mouseY);
   }
 }
