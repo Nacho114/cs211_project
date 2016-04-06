@@ -40,28 +40,37 @@ class Mover {
     popMatrix();
   }
 
-  void checkEdges() {
+  // returns whether the ball bounced
+  boolean checkEdges() {
     if (location.x + ballRadius > plateWidth/2.0) {
       location.x = plateWidth/2. - ballRadius ;
       velocity.x = velocity.x * -1;
+      return true;
     } else if(location.x - ballRadius < -1*plateWidth/2.0){
       location.x = -plateWidth/2. + ballRadius ;
       velocity.x = velocity.x * -1;
+      return true;
     }
     
     if (location.z + ballRadius > plateWidth/2.0) {
       location.z = plateWidth/2. - ballRadius ;
       velocity.z = velocity.z * -1;
+      return true;
     } else if  (location.z - ballRadius < -1*plateWidth/2.0){
       location.z = -plateWidth/2. + ballRadius ;
       velocity.z = velocity.z * -1;
+      return true;
     }
+    return false;
   }
 
 
-  void checkCylinderCollision(ArrayList<PVector> cylinderLocations, float cylinderRadius) {
+  // returns whether there was a colision
+  boolean checkCylinderCollision(ArrayList<PVector> cylinderLocations, float cylinderRadius) {
     PVector location2D = new PVector(location.x, location.z);
     PVector v1 = new PVector(velocity.x, velocity.z);
+    
+    boolean colision = false;
     for (PVector v : cylinderLocations) {
       if (v.dist(location2D) <= ballRadius + cylinderRadius) {
         PVector normal = location2D.copy().sub(v);
@@ -79,7 +88,10 @@ class Mover {
         location2Dupdated.add(normal.mult(cylinderRadius + ballRadius));
         location.x = location2Dupdated.x;
         location.z = location2Dupdated.y;
+        
+        colision = true;
       }
     }
+    return colision;
   }
 }

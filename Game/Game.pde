@@ -2,23 +2,29 @@ Mover mover;
 Cylinders cylinders;
 DataV datav;
 
+// distance (on y axis) of the camera from the plate
 float depth;
 
+// last click (-> cylinder position)
 int lastX;
 int lastY;
 
 boolean shift_mode = false;
 
+// rotation around x and z axis
 float rx = 0.;
 float rz = 0.;
 
+// dimensions
 final int boxLength = 300;
 final int boxHeight = 10;
 final int radius = 10;
 final int cylinderRadius = 15;
 final int cylinderHeight = 15;
 
+// speed at which the plate is tilted
 float amplifier = 1.0;
+
 
 void settings() {
   size(900, 600, P3D);
@@ -70,6 +76,7 @@ void drawPlane() {
   background(230);
   
   // data visualization
+  
   pushMatrix();
     translate(width/2, height/2, 0);
     rotateX(atan(height/4/depth)); // adjust to face camera
@@ -87,11 +94,13 @@ void drawPlane() {
     // update ball
     mover.update(rx, rz);
     
-    // check collision with cylinders and edges
+    // check collision with cylinders and edges, and update score
     if(!cylinders.locations.isEmpty()) {
-       mover.checkCylinderCollision(cylinders.locations, cylinderRadius);
+       if(mover.checkCylinderCollision(cylinders.locations, cylinderRadius))
+         datav.addScore(mover.velocity.mag());
     }
-    mover.checkEdges();
+    if(mover.checkEdges())
+         datav.addScore(-mover.velocity.mag());
     
     // display
     mover.display();
@@ -99,6 +108,7 @@ void drawPlane() {
   popMatrix();
   
   // display text
+  
   /*pushMatrix();
     translate(width/2, height/2, 0);
     rotateX(atan(height/4/depth)); // adjust to face camera
