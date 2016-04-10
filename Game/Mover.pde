@@ -11,13 +11,17 @@ class Mover {
   final int plateHeight;
   final int ballRadius;
 
+  // For topView
+  float scale;
 
-  Mover(int plateWidth, int plateHeight, int ballRadius) {
+
+  Mover(int plateWidth, int plateHeight, int ballRadius, float scale) {
     location = new PVector(0, -1 * (plateHeight/2. + ballRadius), 0);
     velocity = new PVector(0, 0, 0);
     this.plateWidth = plateWidth;
     this.plateHeight = plateHeight;
     this.ballRadius = ballRadius;
+    this.scale = scale;
   }
 
 
@@ -38,6 +42,18 @@ class Mover {
     translate(location.x, location.y, location.z);
     sphere(ballRadius);
     popMatrix();
+  }
+
+  void displayTopView(PGraphics topView) {
+    topView.pushMatrix();
+    topView.pushStyle();
+      topView.translate(location.x * scale, location.z * scale);
+      topView.noStroke(); 
+      topView.fill(170,1,20);
+      float scaleObj = 2 * scale;
+      topView.ellipse(0, 0, ballRadius * scaleObj, ballRadius * scaleObj);
+    topView.popStyle();
+    topView.popMatrix();
   }
 
   // returns whether the ball bounced

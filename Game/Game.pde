@@ -33,10 +33,12 @@ void settings() {
 
 
 void setup() {
+  datav = new DataV(boxLength);
+  float scale = datav.scale;
   noStroke();
-  mover = new Mover(boxLength, boxHeight, radius);
-  cylinders = new Cylinders(boxHeight, width, height, cylinderRadius, cylinderHeight);
-  datav = new DataV();
+  mover = new Mover(boxLength, boxHeight, radius, scale);
+  cylinders = new Cylinders(boxHeight, width, height, cylinderRadius, 
+                                cylinderHeight, scale);
   depth = sqrt(pow((height/2.0) / tan(PI*30.0 / 180.0), 2)-(height*height/16));
 }
 
@@ -81,7 +83,7 @@ void drawPlane() {
     translate(width/2, height/2, 0);
     rotateX(atan(height/4/depth)); // adjust to face camera
     translate(-width/2, height/4, 0);
-    datav.drawAll();
+    datav.drawAll(mover, cylinders);
   popMatrix();
 
   // plate
@@ -109,11 +111,12 @@ void drawPlane() {
   
   // display text
   
-  /*pushMatrix();
+  pushMatrix();
     translate(width/2, height/2, 0);
     rotateX(atan(height/4/depth)); // adjust to face camera
-    text(rx*180/PI + "\n" + +rz*180/PI + "\n" + amplifier, -width/4, -height/4);
-  popMatrix();*/
+    //text(rx*180/PI + "\n" + +rz*180/PI + "\n" + amplifier, -width/4, -height/4);
+    text(mover.location.x + " : x ", -width/4, -height/4);
+  popMatrix();
 }
 
 

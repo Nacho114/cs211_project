@@ -7,6 +7,10 @@ class Cylinders {
   int h;
   PShape cylinderShape = new PShape();
 
+  // Variables used for topView
+  PShape topViewCylinderShape = new PShape();
+  float scale;
+
   color c = color(0, 0, 0);
   ArrayList<PVector> locations = new ArrayList<PVector>();
 
@@ -15,12 +19,13 @@ class Cylinders {
    to translate between shift mode plane and game plane.
    (possibly better way exists?) 
    */
-  Cylinders(float height, int w, int h, float cylinderBaseSize, float cylinderHeight) {
+  Cylinders(float height, int w, int h, float cylinderBaseSize, float cylinderHeight, float scale) {
     this.height = height/2.;
     this.h = h/2;
     this.w = w/2;
     this.cylinderBaseSize = cylinderBaseSize;
     this.cylinderHeight = cylinderHeight;
+    this.scale = scale;
     
     float angle;
     float[] x = new float[cylinderResolution + 1];
@@ -65,6 +70,9 @@ class Cylinders {
     }
     bottom.endShape();
 
+    // For topView
+    float scaleObj = 2 * scale; 
+    topViewCylinderShape = createShape(ELLIPSE, 0, 0, cylinderBaseSize * scaleObj, cylinderBaseSize * scaleObj);
 
     cylinderShape = createShape(GROUP);
     cylinderShape.addChild(sides);
@@ -111,4 +119,25 @@ class Cylinders {
     shape(cylinderShape);
     popMatrix();
   }
+
+
+  // Method to draw all cylinders to the topView 
+  void paintAllInTopView(PGraphics topView) {
+    for (PVector v : locations) {
+      paintTopView(v.x, v.y, topView);
+    }
+  }
+
+  // Draw an individual cylinder to top view
+  void paintTopView(float x, float y, PGraphics topView) {
+    topView.pushMatrix();
+    topView.pushStyle();
+      topView.translate(x * scale, y * scale);
+      topView.noStroke(); 
+      topView.fill(102, 51, 0);
+      topView.shape(topViewCylinderShape);
+    topView.popStyle();
+    topView.popMatrix();   
+  }
+
 }
