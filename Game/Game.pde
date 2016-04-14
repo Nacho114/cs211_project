@@ -11,8 +11,6 @@ int lastY;
 
 boolean shift_mode = false;
 
-HScrollbar hs = new HScrollbar(50, 50, 70, 20);
-
 // rotation around x and z axis
 float rx = 0.;
 float rz = 0.;
@@ -49,7 +47,6 @@ void draw() {
     shiftMode();
   else 
     drawPlane();
-
 }
 
 
@@ -74,7 +71,7 @@ void shiftMode() {
 }
 
 void drawPlane() {
-  camera(width/2.0, height/4.0, depth, width/2.0, height/2.0, 0, 0, 1, 0);
+  //camera(width/2.0, height/4.0, depth, width/2.0, height/2.0, 0, 0, 1, 0);
   directionalLight(200, 100, 50, 0, 1, 0);
   ambientLight(102, 102, 102);
   background(230);
@@ -82,11 +79,13 @@ void drawPlane() {
   // data visualization
   
   pushMatrix();
-    translate(width/2, height/2, 0);
-    rotateX(atan(height/4/depth)); // adjust to face camera
-    translate(-width/2, height/4, 0);
+    translate(0, (3 * height) / 4, 0);
     datav.drawAll(mover, cylinders);
   popMatrix();
+  datav.updateScroll();
+  
+  
+
 
   // plate
   pushMatrix();
@@ -107,17 +106,16 @@ void drawPlane() {
     mover.display();
     cylinders.paintAll();
   popMatrix();
+ 
   
   // display text
   
   pushMatrix();
     translate(width/2, height/2, 0);
-    rotateX(atan(height/4/depth)); // adjust to face camera
+    //rotateX(atan(height/4/depth)); // adjust to face camera
     text(rx*180/PI + "\n" + +rz*180/PI + "\n" + amplifier, -width/4, -height/4);
     text(mover.location.x + " : x ", -width/4, -height/4);
   popMatrix();
- hs.display();
-    hs.update();
 }
 
 

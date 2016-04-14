@@ -9,6 +9,7 @@ class DataV {
   private final color green = color(0, 255, 0); // Color for positive scores
   private final float minNewScore = 0.2; // abs(score) must be greater than this value to count
   private final int timeInterval = 1000; // For scorechart, one second
+  private final int scrollBarLength = width / 2 - 4 * margin; // For scroll length
   
   PGraphics background;
   PGraphics scoreView;
@@ -27,6 +28,7 @@ class DataV {
   float scoreLastTimeInterval = 0.;
   int lastTimeInterval = 0;
   Timer timer;
+  HScrollbar hs;
 
   // Important for topView:
   // Note on scale, when drawing a shape it needs to be scaled 2 * scale
@@ -55,6 +57,8 @@ class DataV {
     scale = topViewBoardDim /((float) gameBoxLength);
     
     timer = new Timer();
+    hs = new HScrollbar((3*width)/4 - scrollBarLength/2, height - 4 * margin, scrollBarLength, 20);
+    println(height);
 
     scoreView = createGraphics(width/4 - 2*margin, datavHeight - 2*margin, P2D);
     topView = createGraphics(width/4 - 2*margin, datavHeight - 2*margin, P2D);
@@ -62,15 +66,11 @@ class DataV {
     
   }
   
-  void drawAxes() {
-    stroke(255, 0, 0);
-    line(-50, 0, 0, 50, 0, 0);
-  
-    stroke(0, 255, 0);
-    line(0, -50, 0, 0, 50, 0);
-    
-    stroke(0, 0, 255);
-    line(0, 0, -50, 0, 0, 50);
+  void updateScroll(){
+    pushStyle();
+      hs.update();
+      hs.display();
+    popStyle();
   }
   
   void pauseScore(){
@@ -120,10 +120,10 @@ class DataV {
   void drawBarChart(){
     hs.update();
     float chartLength = width/2 - 4*margin;
-    int nbToShow = 100;
+    int nbToShow = 10 + (int)(90 * ((exp(hs.getPos()) - 1) / exp(1)));
     int recHeight = 5;
     float recLength = chartLength / nbToShow;
-    int heightBegin = datavHeight - 3*margin;
+    int heightBegin = datavHeight - 6*margin;
     pushStyle();
       barChart.beginDraw();
       barChart.background(barChartColor);
