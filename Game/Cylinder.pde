@@ -5,6 +5,7 @@ class Cylinders {
   float height;
   int w;
   int h;
+ 
   PShape cylinderShape = new PShape();
 
   // Variables used for topView
@@ -74,6 +75,7 @@ class Cylinders {
     float scaleObj = 2 * scale; 
     topViewCylinderShape = createShape(ELLIPSE, 0, 0, cylinderBaseSize * scaleObj, cylinderBaseSize * scaleObj);
 
+
     cylinderShape = createShape(GROUP);
     cylinderShape.addChild(sides);
     cylinderShape.addChild(bottom);
@@ -134,8 +136,8 @@ class Cylinders {
     topView.pushStyle();
       topView.translate(x * scale, y * scale);
       topView.noStroke(); 
-      topView.fill(102, 51, 0);
-      topView.shape(topViewCylinderShape);
+      topView.fill(0, 51, 0);
+      topView.ellipse(0, 0, cylinderBaseSize * scale * 2, cylinderBaseSize * scale * 2);
     topView.popStyle();
     topView.popMatrix();   
   }
