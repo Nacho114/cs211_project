@@ -1,4 +1,4 @@
-PImage img;
+PImage base;
 HScrollbar hueBar2;
 HScrollbar hueBar1;
 
@@ -7,27 +7,27 @@ void settings() {
   size(1600, 600);
 }
 void setup() {
-  img = loadImage("board1.jpg");
+  base = loadImage("board1.jpg");
   hueBar2 = new HScrollbar(0, 580, 800, 20);
   hueBar1 = new HScrollbar(0, 550, 800, 20);
 }
 void draw() {
   background(color(0, 0, 0));
-  
+
   // threshold image
   PImage thres = createImage(width/2, height, ALPHA);
-  img.loadPixels();
-  for (int i = 0; i < img.width * img.height; i++) {
-    if (hue(img.pixels[i]) <= hueBar2.getPos()*255 && hue(img.pixels[i]) >= hueBar1.getPos()*255)
+  base.loadPixels();
+  for (int i = 0; i < base.width * base.height; i++) {
+    if (hue(base.pixels[i]) <= hueBar2.getPos()*255 && hue(base.pixels[i]) >= hueBar1.getPos()*255)
       thres.pixels[i] = color(255);
     else
       thres.pixels[i] = color(0);
   }
   thres.updatePixels();
   image(thres, 0, 0);
-  
+
   // sobel
-  image(sobel(img), width/2, 0);
+  image(sobel(base), width/2, 0);
 
   // scroll bars
   hueBar2.display();
@@ -56,11 +56,11 @@ PImage sobel(PImage img) {
   // kernel size N = 3
   int n = 3;
   float[][] hKernel = { { 0, 1, 0 }, 
-                        { 0, 0, 0 }, 
-                        { 0, -1, 0 } };
+    { 0, 0, 0 }, 
+    { 0, -1, 0 } };
   float[][] vKernel = { { 0, 0, 0 }, 
-                        { 1, 0, -1 }, 
-                        { 0, 0, 0 } };
+    { 1, 0, -1 }, 
+    { 0, 0, 0 } };
   PImage result = createImage(img.width, img.height, ALPHA);
   // clear the image
   for (int i = 0; i < img.width * img.height; i++) {
@@ -95,7 +95,7 @@ PImage sobel(PImage img) {
 
   for (int y = 2; y < img.height - 2; y++) { // Skip top and bottom edges
     for (int x = 2; x < img.width - 2; x++) { // Skip left and right
-      if (buffer[y * img.width + x] > (int)(max * 0.3f)) { // 30% of the max
+      if (buffer[y * img.width + x] > (int)(max * 0.2f)) { // 30% of the max
         result.pixels[y * img.width + x] = color(255);
       } else {
         result.pixels[y * img.width + x] = color(0);
