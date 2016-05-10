@@ -1,44 +1,40 @@
-PImage base;
-HScrollbar hueBar2;
-HScrollbar hueBar1;
+import processing.video.*;
 
+Capture cam;
+PImage img;
 
 void settings() {
-  size(800, 600);
+  size(640, 480);
 }
 void setup() {
-  base = loadImage("board1.jpg");
-  hueBar2 = new HScrollbar(0, 580, 800, 20);
-  hueBar1 = new HScrollbar(0, 550, 800, 20);
+  String[] cameras = Capture.list();
+  if (cameras.length == 0) {
+    println("There are no cameras available for capture.");
+    exit();
+  } else {
+    println("Available cameras:");
+    for (int i = 0; i < cameras.length; i++) {
+      println(cameras[i]);
+    }
+    cam = new Capture(this, cameras[0]);
+    cam.start();
+  }
 }
+
 void draw() {
-  background(color(0, 0, 0));
-
-  // threshold image
-  //PImage thres = createImage(width/2, height, ALPHA);
-  //base.loadPixels();
-  //for (int i = 0; i < base.width * base.height; i++) {
-  //  if (hue(base.pixels[i]) <= hueBar2.getPos()*255 && hue(base.pixels[i]) >= hueBar1.getPos()*255)
-  //    thres.pixels[i] = color(255);
-  //  else
-  //    thres.pixels[i] = color(0);
-  //}
-  //thres.updatePixels();
-  //image(thres, 0, 0);
-
-  // sobel
-  PImage sobelImg = sobel(base);
-  image(sobelImg, 0, 0);//width/2, 0);
+  if (cam.available() == true) {
+    cam.read();
+  }
+  img = cam.get();
+  
+  PImage sobelImg = sobel(img);
+  image(sobelImg, 0, 0);
 
   hough(sobelImg);
-
-  // scroll bars
-  hueBar2.display();
-  hueBar2.update();
-
-  hueBar1.display();
-  hueBar1.update();
 }
+
+
+
 
 // convolute a single pixel
 float convolutePix(PImage img, int x, int y, float[][] kernel) {
@@ -83,7 +79,7 @@ PImage sobel(PImage img) {
       } else {
         buffer[i + j*img.width] = 0;
         float hue = hue(img.pixels[i + j*img.width]);
-        if (hue > hueBar1.getPos()*255 && hue < hueBar2.getPos()*255) {
+        if (hue > 100 && hue < 175) {
           float sum_h = convolutePix(img, i, j, hKernel);
           float sum_v = convolutePix(img, i, j, vKernel);
           // set new pix
