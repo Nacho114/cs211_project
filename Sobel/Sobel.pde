@@ -136,7 +136,7 @@ void hough(PImage edgeImg) {
           float phi = phiStep * discretizationStepsPhi;
           float r = (x * cos(phi) + y * sin(phi))/discretizationStepsR;
           r += (rDim - 1) / 2; // adjust to acc
-          accumulator[phiStep * rDim + (int)(r)] += 1;
+          accumulator[(phiStep+1) * (rDim+2) + (int)(r+1)] += 1;
         }
       }
     }
@@ -160,10 +160,7 @@ void hough(PImage edgeImg) {
       int accR = idx - (accPhi + 1) * (rDim + 2) - 1;
       float r = (accR - (rDim - 1) * 0.5f) * discretizationStepsR;
       float phi = accPhi * discretizationStepsPhi;
-      //
-      //
-      //
-      //
+      
       //Cartesian equation of a line: 
       //  y = ax + b
       //    in polar, y = (-cos(phi)/sin(phi))x + (r/sin(phi))
