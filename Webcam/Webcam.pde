@@ -18,7 +18,7 @@ void settings() {
 
 void setup() {
   // test static image
-  base = loadImage("board1.jpg");
+  base = loadImage("board4.jpg");
   // camera
   /*String[] cameras = Capture.list();
    if (cameras.length == 0) {
@@ -39,6 +39,7 @@ void draw() {
    cam.read();
    }*/
   //camImg = cam.get();
+  int t = millis();
   camImg = base;
   //PImage hueImg = filter.HSBFilter(camImg, 110, 140, 30, 255, 30, 150);
   //PImage hueImg = filter.HSBFilter(camImg, 95, 145, 80, 256, 30, 170);
@@ -96,6 +97,8 @@ void draw() {
       quad(c12.x, c12.y, c23.x, c23.y, c34.x, c34.y, c41.x, c41.y);
     }
   }
+  t = millis() - t;
+  println(t);
 
   noLoop(); // TODO remove
 }

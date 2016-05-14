@@ -53,7 +53,7 @@ class Hough {
       for (int x = 0; x < edgeImg.width; x++) {
         // Are we on an edge?
         if (brightness(edgeImg.pixels[y * edgeImg.width + x]) != 0) {
-          for (int phiStep = 0; phiStep <= phiDim; ++phiStep) {
+          for (int phiStep = 0; phiStep < phiDim; ++phiStep) {
             float r = (x * tabCos[phiStep]) + (y * tabSin[phiStep]);
             r += (rDim - 1) * 0.5; // adjust to acc
             accumulator[(phiStep+1) * (rDim+2) + (int)(r+1)] += 1;
