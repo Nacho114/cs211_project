@@ -18,7 +18,7 @@ void settings() {
 
 void setup() {
   // test static image
-  base = loadImage("board4.jpg");
+  base = loadImage("board1.jpg");
   // camera
   /*String[] cameras = Capture.list();
    if (cameras.length == 0) {
@@ -35,10 +35,10 @@ void setup() {
 }
 
 void draw() {
-  /* if (cam.available() == true) {
+  /*if (cam.available() == true) {
    cam.read();
-   }*/
-  //camImg = cam.get();
+   }
+   camImg = cam.get();*/
   int t = millis();
   camImg = base;
   //PImage hueImg = filter.HSBFilter(camImg, 110, 140, 30, 255, 30, 150);
@@ -96,9 +96,57 @@ void draw() {
         min(255, random.nextInt(300)), 50));
       quad(c12.x, c12.y, c23.x, c23.y, c34.x, c34.y, c41.x, c41.y);
     }
+
+    // pose estimation
+    TwoDThreeD d = new TwoDThreeD(camImg.width, camImg.height);
+    List<PVector> intersections = Arrays.asList(c12, c23, c34, c41);
+    //PVector anglesRad = d.get3DRotations(intersections)
+    //println();
+    println(d.get3DRotations(intersections));
   }
   t = millis() - t;
   println(t);
 
+
   noLoop(); // TODO remove
+}
+
+public static List<PVector> sortCorners(List<PVector> quad) {
+  // Sort corners so that they are ordered clockwise
+  PVector a = quad.get(0);
+  PVector b = quad.get(2);
+  PVector center = new PVector((a.x+b.x)/2, (a.y+b.y)/2);
+  
+  Collections.sort(quad, new CWComparator(center));
+  // TODO:
+  // Re-order the corners so that the first one is the closest to the
+  // origin (0,0) of the image.
+  //
+  // You can use Collections.rotate to shift the corners inside the quad.
+  PVector min = quad.get(0);
+  int minIdx = 0;
+  for(int i = 1; i < 4; ++i){
+    if(min.x > quad.get(i).x && min.y > quad.get(i).y){
+      min = quad.get(i);
+      minIdx = i;
+    }
+  }
+
+  Collections.rotate(quad, quad.size()-i);
+  
+  return quad;
+}
+
+
+class CWComparator implements Comparator<PVector> {
+  PVector center;
+  public CWComparator(PVector center) {
+    this.center = center;
+  }
+  @Override
+    public int compare(PVector b, PVector d) {
+    if (Math.atan2(b.y-center.y, b.x-center.x)<Math.atan2(d.y-center.y, d.x-center.x))
+      return -1;
+    else return 1;
+  }
 }
