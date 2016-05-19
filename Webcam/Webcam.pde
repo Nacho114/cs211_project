@@ -18,7 +18,7 @@ void settings() {
 
 void setup() {
   // test static image
-  base = loadImage("board1.jpg");
+  base = loadImage("board2.jpg");
   // camera
   /*String[] cameras = Capture.list();
    if (cameras.length == 0) {
@@ -100,9 +100,11 @@ void draw() {
     // pose estimation
     TwoDThreeD d = new TwoDThreeD(camImg.width, camImg.height);
     List<PVector> intersections = Arrays.asList(c12, c23, c34, c41);
-    //PVector anglesRad = d.get3DRotations(intersections)
-    //println();
-    println(d.get3DRotations(intersections));
+    PVector anglesRad = d.get3DRotations(sortCorners(intersections));
+    println("x: " + Math.toDegrees(anglesRad.x));
+    println("y: " + Math.toDegrees(anglesRad.y));
+    println("z: " + Math.toDegrees(anglesRad.z));
+    //println(d.get3DRotations(sortCorners(intersections)));
   }
   t = millis() - t;
   println(t);
@@ -111,7 +113,7 @@ void draw() {
   noLoop(); // TODO remove
 }
 
-public static List<PVector> sortCorners(List<PVector> quad) {
+public  List<PVector> sortCorners(List<PVector> quad) {
   // Sort corners so that they are ordered clockwise
   PVector a = quad.get(0);
   PVector b = quad.get(2);
@@ -132,7 +134,7 @@ public static List<PVector> sortCorners(List<PVector> quad) {
     }
   }
 
-  Collections.rotate(quad, quad.size()-i);
+  Collections.rotate(quad, quad.size()-minIdx);
   
   return quad;
 }

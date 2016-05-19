@@ -333,9 +333,8 @@ class QuadGraph {
 
     return quad;
   }
-}
-
-class CWComparator implements Comparator<PVector> {
+  
+  class CWComparator implements Comparator<PVector> {
 
   PVector center;
 
@@ -349,4 +348,5 @@ class CWComparator implements Comparator<PVector> {
       return -1; 
     else return 1;
   }
+}
 }
