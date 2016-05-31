@@ -17,10 +17,10 @@ class Hough {
 
 
   public Hough(PImage edgeImg, float discretizationStepsPhi, float discretizationStepsR) {
-    
+
     int minVotes = 200;//150;
     int neighbourhood = 30;
-    
+
     this.edgeImg = edgeImg;
     this.discretizationStepsPhi = discretizationStepsPhi;
     this.discretizationStepsR = discretizationStepsR;
@@ -198,8 +198,8 @@ class Hough {
 
   public void drawIntersections() {
     pushStyle();
+    fill(255, 128, 0);
     for (PVector intersection : intersections) {
-      //fill(255, 128, 0);
       ellipse(intersection.x, intersection.y, 10, 10);
     }
     popStyle();
@@ -207,7 +207,7 @@ class Hough {
 
   public void drawIntersection(PVector intersection) {
     pushStyle();
-    //fill(255, 128, 0);
+    fill(255, 128, 0);
     ellipse(intersection.x, intersection.y, 10, 10);
     popStyle();
   }

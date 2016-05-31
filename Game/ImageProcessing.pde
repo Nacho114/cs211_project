@@ -98,21 +98,21 @@ class ImageProcessing extends PApplet {
       }
     }
 
-    // Calculate elapsed time
-    t = millis() - t;
+    //// Calculate elapsed time
+    //t = millis() - t;
 
-    // Output corners and draw them
-    if (found) {
-      println("The program took " + t + " milliseconds to finish and found following corners:");
-      hough.drawLinesAndIntersections(quads.get(maxAreaIndex));
-    } else {
-      println("The program took " + t + " milliseconds to finish and was not able to detect corners. Please change some parameters!");
-    }
+    //// Output corners and draw them
+    //if (found) {
+    //  println("The program took " + t + " milliseconds to finish and found following corners:");
+    //  hough.drawLinesAndIntersections(quads.get(maxAreaIndex));
+    //} else {
+    //  println("The program took " + t + " milliseconds to finish and was not able to detect corners. Please change some parameters!");
+    //}
 
-    // Output the accumulator and the result of Sobel's algorithm
-    image(hough.accImg(size), base.width, 0);
-    image(sobelImg, size + base.width, 0);
+    //// Output the accumulator and the result of Sobel's algorithm
+    //image(hough.accImg(size), base.width, 0);
+    //image(sobelImg, size + base.width, 0);
 
-    //noLoop(); // We only use a static image here, nothing changes
+    ////noLoop(); // We only use a static image here, nothing changes
   }
 }
