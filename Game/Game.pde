@@ -77,7 +77,7 @@ void draw() {
   if (shift_mode) 
     shiftMode();
   else 
-  drawPlane();
+    drawPlane();
 }
 
 
@@ -97,7 +97,7 @@ void shiftMode() {
   box(boxLength, boxLength, 0);
   popStyle();
   popMatrix();
-  
+
   cylinders.drawAllInShiftMode();
 }
 
@@ -106,15 +106,16 @@ void drawPlane() {
   ambientLight(102, 102, 102);
   background(230);
 
-  pushStyle();
-  noStroke();
-  fill(100);
-  
+
   // data visualization
 
   pushMatrix();
+  pushStyle();
+  noStroke();
+  fill(200);
   translate(0, (3 * height) / 4, 0);
   datav.drawAll(mover, cylinders);
+  popStyle();
   popMatrix();
   datav.updateScroll();
 
@@ -123,6 +124,9 @@ void drawPlane() {
 
   // plate
   pushMatrix();
+  pushStyle();
+  noStroke();
+  fill(200);
   translate(width/2, height/2, 0);
   rotateX(rx);
   rotateZ(rz);
@@ -139,6 +143,7 @@ void drawPlane() {
   // display
   mover.display();
   cylinders.paintAll();
+  popStyle();
   popMatrix();
 
 
@@ -149,8 +154,7 @@ void drawPlane() {
   text(rx*180/PI + "\n" + +rz*180/PI + "\n" + amplifier, -width/4, -height/4);
   text(mover.location.x + " : x ", -width/4, -height/4);
   popMatrix();
-  
-  popStyle();
+
 }
 
 

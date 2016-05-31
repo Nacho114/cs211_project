@@ -4,7 +4,8 @@ class DataV {
   private final static int margin = 10;
   private final static int textSize = 12;
   private final color topViewBoardColor = color(51, 153, 255);
-  private final color barChartColor = color(230, 230, 200);
+  private final color barChartColor = color(255, 255, 255, 100);
+  private final color scoreColor = color(255, 255, 255, 100);
   private final color red = color(255, 0, 0); // Color for negative scores
   private final color green = color(0, 255, 0); // Color for positive scores
   private final float minNewScore = 0.2; // abs(score) must be greater than this value to count
@@ -106,7 +107,7 @@ class DataV {
       pushMatrix();
         translate(scorePosX + margin, scorePosY + textSize + margin);
         scoreView.beginDraw();
-          scoreView.background(255, 255, 255, 100);
+          scoreView.background(scoreColor);
           
           fill(0);
           text("Total score : " + numberFormat.format(totalScore) 
