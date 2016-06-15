@@ -19,18 +19,18 @@ class Convolution {
     img.loadPixels();
     PImage res = createImage(img.width, img.height, ALPHA);
     for (int i = 0; i < img.width; ++i) {
-      for (int j = 0; j < img.height; ++j) {
-        // border
-        int index = j*img.width + i;
-        if (i < n/2 || i >= img.width-n/2 || j < n/2 || j >= img.height-n/2) {
-          res.pixels[index] = color(brightness(img.pixels[index]));
-        } else {
-          float c = convolutePix(img, i, j, kernel, weight);
-          res.pixels[index] = color(c);
-          maximum = max(maximum, c);
-          minimum = min(minimum, c);
-        }
-      }
+     for (int j = 0; j < img.height; ++j) {
+       // border
+       int index = j*img.width + i;
+       if (i < n/2 || i >= img.width-n/2 || j < n/2 || j >= img.height-n/2) {
+         res.pixels[index] = color(brightness(img.pixels[index]));
+       } else {
+         float c = convolutePix(img, i, j, kernel, weight);
+         res.pixels[index] = color(c);
+         maximum = max(maximum, c);
+         minimum = min(minimum, c);
+       }
+     }
     }
     res.updatePixels();
     return res;
