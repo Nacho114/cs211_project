@@ -54,7 +54,7 @@ void settings() {
   size(900, 600, P3D);
 
   // Load image, calculate the size of the output
-  base = loadImage("data/board1.jpg");
+  base = loadImage("data/board2.jpg");
 }
 
 
@@ -105,10 +105,13 @@ void drawPlane() {
   directionalLight(200, 100, 50, 0, 1, 0);
   ambientLight(102, 102, 102);
   background(230);
-
+  
+  // get rotations from imgProc
+  rx = imgproc.getRotX();
+  rz = imgproc.getRotZ();
+  
 
   // data visualization
-
   pushMatrix();
   pushStyle();
   noStroke();
@@ -118,9 +121,6 @@ void drawPlane() {
   popStyle();
   popMatrix();
   datav.updateScroll();
-
-
-
 
   // plate
   pushMatrix();

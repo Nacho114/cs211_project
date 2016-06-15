@@ -41,7 +41,7 @@ class Mover {
     pushMatrix();
     pushStyle();
     translate(location.x, location.y, location.z);
-    sphere(ballRadius);
+    //sphere(ballRadius); TODO !!
     popStyle();
     popMatrix();
   }

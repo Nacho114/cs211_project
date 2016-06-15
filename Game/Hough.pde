@@ -208,7 +208,7 @@ class Hough {
   public void drawIntersection(PVector intersection) {
     pushStyle();
     fill(255, 128, 0);
-    ellipse(intersection.x, intersection.y, 10, 10);
+    //ellipse(intersection.x, intersection.y, 10, 10); TODO !!
     popStyle();
   }
 
@@ -232,7 +232,7 @@ class Hough {
     drawIntersection(c23);
     drawIntersection(c34);
     drawIntersection(c41);
-    // Choose a random, semi-transparent colour
+    
     println(c12);
     println(c23);
     println(c34);
