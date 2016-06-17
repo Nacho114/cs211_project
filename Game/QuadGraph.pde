@@ -251,7 +251,7 @@ class QuadGraph {
       || (i1<0 && i2<0 && i3<0 && i4<0))
       return true;
     else {
-      // System.out.println("Eliminating non-convex quad");
+      //System.out.println("Eliminating non-convex quad");
     }
     return false;
   }
@@ -281,7 +281,7 @@ class QuadGraph {
 
     boolean valid = (area < max_area && area > min_area);
 
-   // if (!valid) System.out.println("Area out of range");
+    //if (!valid) System.out.println("Area out of range");
 
     return valid;
   }
@@ -326,7 +326,7 @@ class QuadGraph {
     // 2 - Sort by upper left most corner
     PVector origin = new PVector(0, 0);
     float distToOrigin = 1000;
-  
+
     for (PVector p : quad) {
       if (p.dist(origin) < distToOrigin) distToOrigin = p.dist(origin);
     }

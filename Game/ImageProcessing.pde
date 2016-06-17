@@ -2,46 +2,17 @@ import java.util.Collections;
 import java.util.Arrays;
 import processing.video.*;
 
-class ImageProcessing extends PApplet {
-
-
-  Movie cam;
-
-  // The height of the output and the corresponding ratio. Lowering size will have the side effect to be
-  //          less precise in the corner detection (the calculations are based on the resized image).
-  //          Furthermore, the minVotes, minArea and maxArea values must be adapted when changing size.
-
-  int size = 600;
-  //float ratio;
-
+class ImageProcessing {
+  
   private float rx = 0.;
   private float rz = 0.;
 
-  // ::::::::::::::::::::::::::::::: CHANGE INPUT IMAGE HERE :::::::::::::::::::::::::::::::
-  void settings() {
-    // Load image, calculate the size of the output
-    //base = loadImage("data/board1.jpg");
 
-    // int width = (int) (size + 2 * (ratio * base.width));
-    size(800, size);
-  }
-
-  void setup() {
-    cam = new Movie(this, "data/testvideo.mp4"); //Put the video in the same directory
-    cam.loop();
-
-    //base = cam.get();
-    //ratio = ((float) size) / ((float) base.height);
-  }
-  
-  void movieEvent(Movie m){
-    m.read();
-  }
-
-  void draw() {
+  void process() {
     //if (cam.available() == true) {
-    //  cam.read();
+    // cam.read();
     //}
+    //cam.updatePixels();
     //base = cam.get();
 
     // To mesure time
@@ -52,7 +23,7 @@ class ImageProcessing extends PApplet {
     //base.updatePixels();
 
     // Output resized input image
-    image(base, 0, 0);
+    //image(base, 0, 0);
 
     // Apply a HSB thresholding and blurr it
     PImage hueImg = filter.HSBFilter(base, 95, 145, 100, 256, 30, 150);
@@ -73,6 +44,7 @@ class ImageProcessing extends PApplet {
     List<PVector> intersections = null;
     boolean found = false;
     List<int[]> quads = qd.findCycles();
+    //println("\tNumber of quads found: " + quads.size());
     for (int i=0; i<quads.size(); i++) {
       int[] quad = quads.get(i);
       PVector l1 = lines.get(quad[0]);
@@ -87,7 +59,7 @@ class ImageProcessing extends PApplet {
       PVector c34 = qd.intersection(l3, l4);
       PVector c41 = qd.intersection(l4, l1);
       int minArea = 40_000;
-      int maxArea = 250_000;
+      int maxArea = 350_000;
       if (qd.isConvex(c12, c23, c34, c41) && qd.validArea(c12, c23, c34, c41, maxArea, minArea) && qd.nonFlatQuad(c12, c23, c34, c41)) {
         float area = qd.area(c12, c23, c34, c41);
         if (area > biggestArea) {
@@ -104,23 +76,23 @@ class ImageProcessing extends PApplet {
 
     // Output corners and draw them
     if (found) {
-      println("The program took " + t + " milliseconds to finish and found following corners:");
+      //println("The program took " + t + " milliseconds to finish and found following corners:");
       hough.drawLinesAndIntersections(quads.get(maxAreaIndex));
       // pose estimation
       TwoDThreeD d = new TwoDThreeD(base.width, base.height);
       PVector anglesRad = d.get3DRotations(sortCorners(intersections));
-      println("x: " + Math.toDegrees(anglesRad.x));
-      println("y: " + Math.toDegrees(anglesRad.y));
-      println("z: " + Math.toDegrees(anglesRad.z));
+      //println("x: " + Math.toDegrees(anglesRad.x));
+      //println("y: " + Math.toDegrees(anglesRad.y));
+      //println("z: " + Math.toDegrees(anglesRad.z));
       rx = anglesRad.x;
       rz = anglesRad.z;
     } else {
-      println("The program took " + t + " milliseconds to finish and was not able to detect corners. Please change some parameters!");
+      //println("The program took " + t + " milliseconds to finish and was not able to detect corners. Please change some parameters!");
     }
 
     // Output the accumulator and the result of Sobel's algorithm
-    image(hough.accImg(size), base.width, 0);
-    image(sobelImg, size + base.width, 0);
+    //image(hough.accImg(size), base.width, 0);
+    //image(sobelImg, size + base.width, 0);
 
     //noLoop(); // We only use a static image here, nothing changes
   }

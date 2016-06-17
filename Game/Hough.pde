@@ -233,10 +233,10 @@ class Hough {
     drawIntersection(c34);
     drawIntersection(c41);
     
-    println(c12);
-    println(c23);
-    println(c34);
-    println(c41);
+    //println(c12);
+    //println(c23);
+    //println(c34);
+    //println(c41);
   }
 
   public void drawLines() {
