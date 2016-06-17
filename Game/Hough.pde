@@ -208,7 +208,7 @@ class Hough {
   public void drawIntersection(PVector intersection) {
     pushStyle();
     fill(255, 128, 0);
-    //ellipse(intersection.x, intersection.y, 10, 10); TODO !!
+    ellipse(intersection.x, intersection.y, 10, 10);
     popStyle();
   }
 

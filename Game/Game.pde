@@ -109,7 +109,10 @@ void drawPlane() {
   // get rotations from imgProc
   rx = imgproc.getRotX();
   rz = imgproc.getRotZ();
-  
+  rx = min(rx, PI/3);
+  rx = max(rx, -PI/3);
+  rz = min(rz, PI/3);
+  rz = max(rz, -PI/3);
 
   // data visualization
   pushMatrix();

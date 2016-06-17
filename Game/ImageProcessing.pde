@@ -46,10 +46,10 @@ class ImageProcessing extends PApplet {
   }
 
   void draw() {
-    //if (cam.available() == true) {
-    // cam.read();
-    //}
-    //base = cam.get();
+    if (cam.available() == true) {
+    cam.read();
+    }
+    base = cam.get();
 
     // To mesure time
     int t = millis();
