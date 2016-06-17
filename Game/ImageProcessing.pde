@@ -5,7 +5,7 @@ import processing.video.*;
 class ImageProcessing extends PApplet {
 
 
-  Capture cam;
+  Movie cam;
 
   // The height of the output and the corresponding ratio. Lowering size will have the side effect to be
   //          less precise in the corner detection (the calculations are based on the resized image).
@@ -27,29 +27,22 @@ class ImageProcessing extends PApplet {
   }
 
   void setup() {
-    // camera
-    String[] cameras = Capture.list();
-    if (cameras.length == 0) {
-      println("There are no cameras available for capture.");
-      exit();
-    } else {
-      println("Available cameras:");
-      for (int i = 0; i < cameras.length; i++) {
-        println(cameras[i]);
-      }
-      cam = new Capture(this, cameras[0]);
-      cam.start();
-    }
+    cam = new Movie(this, "data/testvideo.mp4"); //Put the video in the same directory
+    cam.loop();
 
     //base = cam.get();
     //ratio = ((float) size) / ((float) base.height);
   }
+  
+  void movieEvent(Movie m){
+    m.read();
+  }
 
   void draw() {
-    if (cam.available() == true) {
-    cam.read();
-    }
-    base = cam.get();
+    //if (cam.available() == true) {
+    //  cam.read();
+    //}
+    //base = cam.get();
 
     // To mesure time
     int t = millis();
