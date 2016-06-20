@@ -109,7 +109,9 @@ class Hough {
   private List<PVector> calculateLines() {
     List<PVector> ret = new ArrayList<PVector>();
     for (int e : bestCandidates) {
-      ret.add(vectorForElem(e));
+      PVector l = vectorForElem(e);
+      //drawPolarLine(l);
+      ret.add(l);
     }
     return ret;
   }
@@ -121,7 +123,7 @@ class Hough {
     int accR = idx - (accPhi + 1) * (rDim + 2) - 1;
     float r = (accR - (rDim - 1) * 0.5f) * discretizationStepsR;
     float phi = accPhi * discretizationStepsPhi;
-
+    
     return new PVector(r, phi);
   }
 

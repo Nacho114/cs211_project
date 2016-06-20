@@ -18,17 +18,12 @@ class ImageProcessing {
     // To mesure time
     int t = millis();
 
-    // Resize image for easily readable output
-    //base.resize((int) (ratio * base.width), size);
-    //base.updatePixels();
-
-    // Output resized input image
-    //image(base, 0, 0);
-
     // Apply a HSB thresholding and blurr it
-    PImage hueImg = filter.HSBFilter(base, 95, 145, 100, 256, 30, 150);
+    PImage hueImg = filter.HSBFilter(base, 110, 130, 100, 256, 60, 150);
     PImage blurred = conv.gaussianBlur(hueImg);
     blurred = conv.gaussianBlur(blurred);
+    
+    //image(blurred, 0, 0);
 
     // Run the Sobel algorithm
     PImage sobelImg = sobel.sobel(blurred);
@@ -58,7 +53,7 @@ class ImageProcessing {
       PVector c23 = qd.intersection(l2, l3);
       PVector c34 = qd.intersection(l3, l4);
       PVector c41 = qd.intersection(l4, l1);
-      int minArea = 40_000;
+      int minArea = 0;//40_000;
       int maxArea = 350_000;
       if (qd.isConvex(c12, c23, c34, c41) && qd.validArea(c12, c23, c34, c41, maxArea, minArea) && qd.nonFlatQuad(c12, c23, c34, c41)) {
         float area = qd.area(c12, c23, c34, c41);
@@ -77,7 +72,7 @@ class ImageProcessing {
     // Output corners and draw them
     if (found) {
       //println("The program took " + t + " milliseconds to finish and found following corners:");
-      hough.drawLinesAndIntersections(quads.get(maxAreaIndex));
+      //hough.drawLinesAndIntersections(quads.get(maxAreaIndex));
       // pose estimation
       TwoDThreeD d = new TwoDThreeD(base.width, base.height);
       PVector anglesRad = d.get3DRotations(sortCorners(intersections));
@@ -113,11 +108,6 @@ class ImageProcessing {
     PVector center = new PVector((a.x+b.x)/2, (a.y+b.y)/2);
 
     Collections.sort(quad, new CWComparator(center));
-    // TODO:
-    // Re-order the corners so that the first one is the closest to the
-    // origin (0,0) of the image.
-    //
-    // You can use Collections.rotate to shift the corners inside the quad.
     PVector min = quad.get(0);
     int minIdx = 0;
     for (int i = 1; i < 4; ++i) {

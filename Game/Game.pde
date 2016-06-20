@@ -58,7 +58,7 @@ void settings() {
   size(900, 600, P3D);
 
   // Load image, calculate the size of the output
-  base = loadImage("data/board2.jpg");
+  //base = loadImage("data/board2.jpg");
 }
 
 
@@ -73,8 +73,6 @@ void setup() {
   depth = sqrt(pow((height/2.0) / tan(PI*30.0 / 180.0), 2)-(height*height/16));
   // image proc
   imgproc = new ImageProcessing();
-  //String []args = {"Image processing window"};
-  //PApplet.runSketch(args, imgproc);
   
   // video
   video = new Movie(this, "testvideo.mp4");
@@ -89,14 +87,15 @@ void draw() {
   PImage resized = base.copy();
   resized.resize(0, 200);
   
-  // perform detection
-  imgproc.process();
   
   // display game
   if (shift_mode) 
     shiftMode();
   else 
     drawPlane();
+    
+  // perform detection
+  imgproc.process();
     
   image(resized, 0, 0);
 }

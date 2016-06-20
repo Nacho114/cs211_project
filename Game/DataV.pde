@@ -59,7 +59,6 @@ class DataV {
     
     timer = new Timer();
     hs = new HScrollbar((3*width)/4 - scrollBarLength/2, height - 4 * margin, scrollBarLength, 20);
-    println(height);
 
     scoreView = createGraphics(width/4 - 2*margin, datavHeight - 2*margin, P2D);
     topView = createGraphics(width/4 - 2*margin, datavHeight - 2*margin, P2D);
